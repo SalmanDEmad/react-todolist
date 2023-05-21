@@ -1,6 +1,14 @@
 body {
-  background-color: #EEEEEE;
+  background-color: #070510 !important;
+  color: aliceblue !important;
   font-family: Arial, Helvetica, sans-serif;
+}
+
+ul {
+  margin-top: 20px !important;
+  margin-left: 20px !important;
+  margin-right: 20px !important;
+  padding-left: 0px !important;
 }
 
 .todo-list {
@@ -10,6 +18,7 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  background-color: #16121c;
 }
 
 .list-content {
@@ -26,23 +35,37 @@ ul {
 }
 
 .unimportant {
-  border: 1px solid rgb(17, 255, 0);
-  border-left: 10px solid rgba(17, 255, 0, 0.474);
+  border: 1px solid rgb(17, 255, 0.474);
+  border-left: 15px solid rgb(17, 255, 0);
 }
 
 .semi-important {
-  border: 1px solid rgb(221, 255, 0);
-  border-left: 10px solid rgba(221, 255, 0, 0.474);
+  border: 1px solid rgb(221, 255, 0.474);
+  border-left: 15px solid rgb(221, 255, 0);
 }
 
 .important {
-  background-color: rgba(246, 0, 0, 0.096);
-  border: 1px solid red;
-  border-left: 10px solid rgba(255, 0, 0, 0.474);
+  border: 1px solid rgba(255, 0, 0, 0.474);
+  border-left: 15px solid rgb(255, 0, 0);
 }
 
 .tag {
-  background-color: yellowgreen;
   padding: 5px;
   border-radius: 4px;
+}
+
+.hidden {
+  display: none;
+}
+
+.todo-list.completed .important,
+.todo-list.completed .semi-important,
+.todo-list.completed .unimportant  {
+  color: #5d5d5d;
+  border: 1px solid rgba(255, 0, 0, 0.007);
+  border-left: 15px solid rgba(255, 0, 0, 0.022);
+}
+
+.submit-btn {
+  margin-top: 15px !important;
 }

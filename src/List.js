@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import DropdownMenu from './Tagdropdown';
 import Badge from 'react-bootstrap/Badge';
 
+import { Form, Button } from 'react-bootstrap';
+
 import 'bootstrap/dist/css/bootstrap.min.css';  
 
 function TodoList() {
@@ -18,7 +20,9 @@ function TodoList() {
   const month = String(currentDate.getMonth() + 1).padStart(2, '0');
   const day = String(currentDate.getDate()).padStart(2, '0');
 
-  const formattedDate = `${year}-${month}-${day}`;
+  const defaultFormattedDate = `${year}-${month}-${day}`;
+
+  const [formattedDate, setFormattedDate] = useState(defaultFormattedDate);
 
   const handleTaskTitleInputChange = (event) => {
     setTaskTitleInput(event.target.value);
@@ -40,6 +44,11 @@ function TodoList() {
     setSelectedOption(option);
   };
 
+  const handleFormattedDateChange = (event) => {
+    setFormattedDate(event.target.value);
+  };
+
+
   const handleFormSubmit = (event) => {
     event.preventDefault();
 
@@ -53,6 +62,7 @@ function TodoList() {
       time: timeInput,
       date: dateInput,
       tag: selectedOption,
+      completed: false, // Add the completed property and initialize it as false
     };
 
     setTasks((prevTasks) => [...prevTasks, newTask]);
@@ -83,50 +93,98 @@ function TodoList() {
     setTasks(updatedTasks);
   };
 
+  const handleTaskCompletion = (index) => {
+    const updatedTasks = [...tasks];
+    updatedTasks[index].completed = !updatedTasks[index].completed;
+    setTasks(updatedTasks);
+  };
+  
+  
+
   return (
     <div>
       <h2>Todo List</h2>
-      <form onSubmit={handleFormSubmit}>
-
-          <input
-            type="text"
-            value={taskTitleInput}
-            onChange={handleTaskTitleInputChange}
-            placeholder="Enter a task"
-          />
-          <input
-            type="text"
-            value={taskDescInput}
-            onChange={handleTaskDescInputChange}
-            placeholder="Enter task description"
-          />
-        <div>
-        <input
+      <Form onSubmit={handleFormSubmit} className="w-75 mx-auto">
+  <div className="row mb-3">
+    <div className="col">
+      <Form.Group controlId="taskTitleInput">
+        <Form.Label>Task Title</Form.Label>
+        <Form.Control
+          type="text"
+          value={taskTitleInput}
+          onChange={handleTaskTitleInputChange}
+          placeholder="Enter a task"
+        />
+      </Form.Group>
+    </div>
+    <div className="col">
+      <Form.Group controlId="taskDescInput">
+        <Form.Label>Task Description</Form.Label>
+        <Form.Control
+          type="text"
+          value={taskDescInput}
+          onChange={handleTaskDescInputChange}
+          placeholder="Enter task description"
+        />
+      </Form.Group>
+    </div>
+  </div>
+  <div className="row mb-3">
+    <div className="col">
+      <Form.Group controlId="timeInput">
+        <Form.Label>Time</Form.Label>
+        <Form.Control
           type="time"
           value={timeInput}
           onChange={handleTimeInputChange}
         />
-        <input
+      </Form.Group>
+    </div>
+    <div className="col">
+      <Form.Group controlId="dateInput">
+        <Form.Label>Date</Form.Label>
+        <Form.Control
           type="date"
           value={dateInput}
           onChange={handleDateInputChange}
         />
-          <DropdownMenu onSelect={handleDropdownSelect} />
-        </div>
-        <button type="submit">Add Task</button>
+      </Form.Group>
+    </div>
+  </div>
+  <DropdownMenu onSelect={handleDropdownSelect} />
+
+  <div className="text-center submit-btn">
+    <Button variant="primary" type="submit">
+      Add Task
+    </Button>
+  </div>
+</Form>
+      <form>
+        <label htmlFor="formattedDate">Date of task:</label>
+        <input
+          type="date"
+          id="formattedDate"
+          value={formattedDate}
+          onChange={handleFormattedDateChange}
+        />
       </form>
 
       <ul>
         {sortedTasks.map((task, index) => (
           <li key={index}>
-            <div className={`todo-list ${task.date === formattedDate ? `${task.tag} ${task.date}` : 'hidden'}`}>
+              <div
+                className={`todo-list ${
+                  task.date === formattedDate ? `${task.completed ? 'completed' : task.tag} ${task.date}` : 'hidden'
+                }`}
+              >
               <div className='list-content'>
                 <h3>{task.task_title}</h3>
                 <p>{task.task_desc}</p>
               </div>
+              <Badge bg="primary"> {task.completed ? 'complete' : 'pending'} </Badge>
               <Badge bg={task.tag === 'important' ? 'danger' : task.tag === 'semi-important' ? 'warning' : 'success'} onClick={() => handleTagClick(index)} > {task.tag} </Badge>{' '}
               <p>{ task.date }</p>
-              <input type='checkbox'></input>
+              <input type="checkbox" checked={task.completed} onChange={() => handleTaskCompletion(index)} /> {/* Add checkbox input */}
             </div>
           </li>
         ))}
