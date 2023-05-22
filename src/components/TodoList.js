@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import DropdownMenu from './Tagdropdown';
+import DropdownMenu from '../DropDownMenu';
 import Badge from 'react-bootstrap/Badge';
 
 import { Form, Button } from 'react-bootstrap';
@@ -105,60 +105,66 @@ function TodoList() {
     <div>
       <h2>Todo List</h2>
       <Form onSubmit={handleFormSubmit} className="w-75 mx-auto">
-  <div className="row mb-3">
-    <div className="col">
-      <Form.Group controlId="taskTitleInput">
-        <Form.Label>Task Title</Form.Label>
-        <Form.Control
-          type="text"
-          value={taskTitleInput}
-          onChange={handleTaskTitleInputChange}
-          placeholder="Enter a task"
-        />
-      </Form.Group>
-    </div>
-    <div className="col">
-      <Form.Group controlId="taskDescInput">
-        <Form.Label>Task Description</Form.Label>
-        <Form.Control
-          type="text"
-          value={taskDescInput}
-          onChange={handleTaskDescInputChange}
-          placeholder="Enter task description"
-        />
-      </Form.Group>
-    </div>
-  </div>
-  <div className="row mb-3">
-    <div className="col">
-      <Form.Group controlId="timeInput">
-        <Form.Label>Time</Form.Label>
-        <Form.Control
-          type="time"
-          value={timeInput}
-          onChange={handleTimeInputChange}
-        />
-      </Form.Group>
-    </div>
-    <div className="col">
-      <Form.Group controlId="dateInput">
-        <Form.Label>Date</Form.Label>
-        <Form.Control
-          type="date"
-          value={dateInput}
-          onChange={handleDateInputChange}
-        />
-      </Form.Group>
-    </div>
-  </div>
-  <DropdownMenu onSelect={handleDropdownSelect} />
+        <div className="row mb-3">
+          <div className="col">
+            <Form.Group controlId="taskTitleInput">
+              <Form.Label>Task Title</Form.Label>
+              <Form.Control
+                type="text"
+                value={taskTitleInput}
+                onChange={handleTaskTitleInputChange}
+                placeholder="Enter a task"
+              />
+            </Form.Group>
+          </div>
+          <div className="col">
+            <Form.Group controlId="taskDescInput">
+              <Form.Label>Task Description</Form.Label>
+              <Form.Control
+                type="text"
+                value={taskDescInput}
+                onChange={handleTaskDescInputChange}
+                placeholder="Enter task description"
+              />
+            </Form.Group>
+          </div>
+        </div>
+        <div className="row mb-3">
+          <div className="col">
+            <Form.Group controlId="timeInput">
+              <Form.Label>Time</Form.Label>
+              <Form.Control
+                type="time"
+                value={timeInput}
+                onChange={handleTimeInputChange}
+              />
+            </Form.Group>
+          </div>
+          <div className="col">
+            <Form.Group controlId="dateInput">
+              <Form.Label>Date</Form.Label>
+              <Form.Control
+                type="date"
+                value={dateInput}
+                onChange={handleDateInputChange}
+              />
+            </Form.Group>
+          </div>
+        </div>
+      <DropdownMenu onSelect={handleDropdownSelect}>
+        <option value="">Select an option</option>
+        <option value="important">Important</option>
+        <option value="semi-important">Semi Important</option>
+        <option value="unimportant">Unimportant</option>
+      </DropdownMenu>
 
-  <div className="text-center submit-btn">
-    <Button variant="primary" type="submit">
-      Add Task
-    </Button>
-  </div>
-</Form>
+
+        <div className="text-center submit-btn">
+          <Button variant="primary" type="submit">
+            Add Task
+          </Button>
+        </div>
+      </Form>
       <form>
         <label htmlFor="formattedDate">Date of task:</label>
         <input
